@@ -1,18 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/server.js",
-    "start": "node src/server.js",
-    "build":"npm install && cd ../admin && npm install && npm run build"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "module",
-  "description": "",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
   "dependencies": {
     "@clerk/express": "^1.7.60",
     "cloudinary": "^2.8.0",
