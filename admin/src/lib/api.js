@@ -17,7 +17,7 @@ export const productApi = {
   },
 
   delete: async (productId) => {
-    const { data } = await axiosInstance.delete(`/admin/products/${productId}`);
+    const { data } = await axiosInstance.delete(`/admin/product/${productId}`);
     return data;
   },
 };
