@@ -1,4 +1,4 @@
-import cloudinary from "cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import { Product } from "../models/product.model.js";
 import { Order } from "../models/order.model.js";
 import { User } from "../models/user.model.js";
@@ -55,14 +55,14 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {
+export async function updateProduct(req, res) {
   try {
     const { id } = req.params;
     const { name, description, price, stock, category } = req.body;
 
     const product = await Product.findById(id);
     if (!product) {
-      return res.json(404).json({ message: "Product not Found" });
+      return res.status(404).json({ message: "Product not found" });
     }
 
     if (name) product.name = name;
@@ -79,27 +79,28 @@ export const updateProduct = async (req, res) => {
 
       const uploadPromises = req.files.map((file) => {
         return cloudinary.uploader.upload(file.path, {
-          folder: "product",
+          folder: "products",
         });
       });
 
       const uploadResults = await Promise.all(uploadPromises);
       product.images = uploadResults.map((result) => result.secure_url);
-
-      await product.save();
-      res.status(200).json(product);
     }
+
+    await product.save();
+    res.status(200).json(product);
   } catch (error) {
     console.error("Error updating products:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
+}
+
 
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
       .populate("user", "name email")
-      .populate(orderItems.Product)
+      .populate("orderItems.product")
       .sort({ createdAt: -1 });
 
     res.status(200).json({ orders });

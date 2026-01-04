@@ -1,14 +1,10 @@
-import { SignedOut, SignIn } from '@clerk/clerk-react'
-import React from 'react'
+import { SignIn } from "@clerk/clerk-react";
 
 function LoginPage() {
   return (
-    <div>LoginPage
-    
-      <SignIn/>
-   
-</div>
-  )
+    <div className="h-screen hero">
+      <SignIn />
+    </div>
+  );
 }
-
-export default LoginPage
+export default LoginPage;
